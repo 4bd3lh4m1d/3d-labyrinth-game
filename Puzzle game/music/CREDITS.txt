@@ -1,0 +1,16 @@
+Sound effects by Kenney (www.kenney.nl), licensed CC0 1.0 (public domain, no attribution required).
+
+Source packs:
+- UI Audio      https://kenney.nl/assets/ui-audio
+- Impact Sounds https://kenney.nl/assets/impact-sounds
+- Music Jingles https://kenney.nl/assets/music-jingles
+
+Files in this folder and their origin:
+- footstep1-4.ogg    <- Impact Sounds / footstep_wood_000-003.ogg
+- jump.ogg           <- Impact Sounds / impactSoft_medium_000.ogg
+- wall_bump.ogg      <- Impact Sounds / impactPlank_medium_000.ogg
+- button_click.ogg   <- UI Audio / click1.ogg
+- tile_move.ogg      <- UI Audio / switch2.ogg
+- picture_found.ogg  <- Music Jingles / Pizzicato jingles / jingles_PIZZI00.ogg
+- puzzle_solved.ogg  <- Music Jingles / 8-Bit jingles / jingles_NES05.ogg
+- win_fanfare.ogg    <- Music Jingles / 8-Bit jingles / jingles_NES00.ogg

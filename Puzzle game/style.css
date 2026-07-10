@@ -1,0 +1,357 @@
+:root{
+	--ink: 25 35% 15%;
+	--ink-soft: 28 20% 38%;
+	--paper: 38 48% 97%;
+	--paper-edge: 34 32% 87%;
+	--accent: 14 82% 56%;
+	--accent-dark: 14 70% 46%;
+	--accent-ink: 14 55% 20%;
+	--accent-soft: 14 90% 94%;
+	--stage-1: 252 32% 11%;
+	--stage-2: 22 45% 16%;
+	--focus: 199 90% 52%;
+	--radius-lg: 28px;
+	--radius-md: 18px;
+	--radius-sm: 10px;
+	--ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*{
+	box-sizing:border-box;
+}
+
+html, body{
+	margin:0;
+	height:100%;
+	background:
+		radial-gradient(circle at 20% 15%, hsl(var(--stage-2) / 0.9), transparent 55%),
+		linear-gradient(160deg, hsl(var(--stage-1)), hsl(var(--stage-2)));
+	font-family:"Nunito", sans-serif;
+}
+
+#stage{
+	min-height:100%;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	padding:40px 20px;
+}
+
+#container{
+	position:relative;
+	width:1200px;
+	height:800px;
+	border-radius:var(--radius-lg);
+	border:10px solid hsl(38 30% 90% / 0.08);
+	box-shadow:
+		0 30px 60px -20px rgb(0 0 0 / 0.6),
+		0 0 0 1px hsl(0 0% 100% / 0.05) inset;
+	perspective:600px;
+	overflow:hidden;
+	background:#111;
+}
+
+#world{
+	position:absolute;
+	width:inherit;
+	height:inherit;
+	transform-style:preserve-3d;
+}
+
+.square{
+	position:absolute;
+	background-size:cover;
+	background-position:center;
+}
+
+/* ---------- menus ---------- */
+
+.menu{
+	position:absolute;
+	inset:0;
+	display:none;
+	align-items:center;
+	justify-content:center;
+	background:
+		radial-gradient(circle at 80% 0%, hsl(var(--accent-soft) / 0.6), transparent 45%),
+		linear-gradient(180deg, hsl(var(--paper)), hsl(var(--paper-edge)));
+	overflow:auto;
+}
+
+.menuPanel{
+	position:relative;
+	display:flex;
+	flex-direction:column;
+	align-items:center;
+	gap:16px;
+	width:min(720px, 86%);
+	padding:48px 44px;
+	text-align:center;
+}
+
+.menuTitle{
+	margin:0 0 8px;
+	font-family:"Baloo 2", sans-serif;
+	font-weight:800;
+	font-size:40px;
+	line-height:1.15;
+	color:hsl(var(--ink));
+	letter-spacing:-0.01em;
+}
+
+.menuBody{
+	margin:0 0 12px;
+	max-width:52ch;
+	font-size:17px;
+	line-height:1.65;
+	color:hsl(var(--ink-soft));
+}
+
+.menuBody strong{
+	color:hsl(var(--ink));
+}
+
+/* ---------- buttons ---------- */
+
+.button, .navButton{
+	position:relative;
+	width:min(420px, 100%);
+	padding:20px 28px;
+	border-radius:var(--radius-md);
+	background:hsl(var(--paper));
+	border:2px solid hsl(var(--paper-edge));
+	box-shadow:0 6px 0 hsl(var(--paper-edge)), 0 10px 18px -8px rgb(0 0 0 / 0.35);
+	cursor:pointer;
+	transition:transform 160ms var(--ease), box-shadow 160ms var(--ease), background-color 160ms var(--ease);
+}
+
+.button p, .navButton p{
+	margin:0;
+	font-family:"Baloo 2", sans-serif;
+	font-weight:700;
+	font-size:20px;
+	color:hsl(var(--ink));
+}
+
+.button:hover, .navButton:hover{
+	transform:translateY(-3px);
+	background:hsl(38 60% 99%);
+	box-shadow:0 9px 0 hsl(var(--paper-edge)), 0 16px 24px -10px rgb(0 0 0 / 0.4);
+}
+
+.button:active, .navButton:active{
+	transform:translateY(2px);
+	box-shadow:0 2px 0 hsl(var(--paper-edge)), 0 4px 10px -6px rgb(0 0 0 / 0.4);
+}
+
+.button:focus-visible, .navButton:focus-visible,
+.langButton:focus-visible, .textInput:focus-visible{
+	outline:3px solid hsl(var(--focus));
+	outline-offset:2px;
+}
+
+.buttonPrimary{
+	background:hsl(var(--accent));
+	border-color:hsl(var(--accent-dark));
+	box-shadow:0 6px 0 hsl(var(--accent-dark)), 0 10px 20px -8px hsl(var(--accent) / 0.55);
+}
+
+.buttonPrimary p{
+	color:hsl(38 60% 99%);
+}
+
+.buttonPrimary:hover{
+	background:hsl(14 85% 60%);
+	box-shadow:0 9px 0 hsl(var(--accent-dark)), 0 18px 26px -10px hsl(var(--accent) / 0.6);
+}
+
+.buttonPrimary:active{
+	box-shadow:0 2px 0 hsl(var(--accent-dark)), 0 4px 10px -6px hsl(var(--accent) / 0.5);
+}
+
+.navButtonGhost{
+	background:transparent;
+	box-shadow:none;
+	border-color:transparent;
+}
+
+.navButtonGhost p{
+	color:hsl(var(--ink-soft));
+	text-decoration:underline;
+	text-decoration-color:hsl(var(--paper-edge));
+	text-underline-offset:4px;
+}
+
+.navButtonGhost:hover{
+	transform:translateY(-1px);
+	background:transparent;
+	box-shadow:none;
+}
+
+.navButtonGhost:hover p{
+	color:hsl(var(--ink));
+}
+
+/* ---------- language toggle ---------- */
+
+.langToggle{
+	position:absolute;
+	top:20px;
+	right:20px;
+	display:flex;
+	gap:4px;
+	padding:4px;
+	background:hsl(var(--paper-edge) / 0.6);
+	border-radius:999px;
+}
+
+.langButton{
+	width:52px;
+	height:36px;
+	line-height:36px;
+	text-align:center;
+	border-radius:999px;
+	cursor:pointer;
+	font-family:"Baloo 2", sans-serif;
+	font-weight:700;
+	font-size:14px;
+	color:hsl(var(--ink-soft));
+	transition:background-color 160ms var(--ease), color 160ms var(--ease);
+}
+
+.langButton:hover{
+	background:hsl(var(--paper) / 0.7);
+}
+
+.langButton.active{
+	background:hsl(var(--accent));
+	color:hsl(38 60% 99%);
+}
+
+/* ---------- form fields ---------- */
+
+.fieldLabel{
+	align-self:flex-start;
+	margin-left:6px;
+	font-family:"Nunito", sans-serif;
+	font-weight:700;
+	font-size:14px;
+	color:hsl(var(--ink-soft));
+}
+
+.textInput{
+	width:100%;
+	max-width:420px;
+	height:52px;
+	padding:0 18px;
+	margin-top:-8px;
+	border-radius:var(--radius-sm);
+	border:2px solid hsl(var(--paper-edge));
+	background:hsl(38 60% 99%);
+	font-size:16px;
+	font-family:"Nunito", sans-serif;
+	color:hsl(var(--ink));
+}
+
+.textInputShort{
+	max-width:150px;
+}
+
+.textInput:focus{
+	outline:none;
+	border-color:hsl(var(--focus));
+	box-shadow:0 0 0 3px hsl(var(--focus) / 0.25);
+}
+
+.errorText{
+	margin:-6px 0 0;
+	color:hsl(4 75% 45%);
+	font-family:"Nunito", sans-serif;
+	font-weight:700;
+	font-size:14px;
+	min-height:18px;
+}
+
+.noticeText{
+	margin:-4px 0 0;
+	max-width:48ch;
+	color:hsl(var(--ink-soft));
+	font-family:"Nunito", sans-serif;
+	font-size:13px;
+}
+
+/* ---------- puzzle overlay ---------- */
+
+.puzzleMenu{
+	background:
+		radial-gradient(circle at 15% 100%, hsl(var(--accent-soft) / 0.5), transparent 50%),
+		linear-gradient(180deg, hsl(var(--paper)), hsl(var(--paper-edge)));
+}
+
+.puzzlePanel{
+	width:min(900px, 92%);
+}
+
+.puzzleArea{
+	display:flex;
+	align-items:flex-start;
+	justify-content:center;
+	gap:28px;
+	flex-wrap:wrap;
+}
+
+.puzzleGrid{
+	display:grid;
+	gap:4px;
+	width:380px;
+	height:380px;
+	padding:8px;
+	background:hsl(var(--ink) / 0.9);
+	border-radius:var(--radius-md);
+	box-shadow:0 10px 24px -10px rgb(0 0 0 / 0.5);
+}
+
+.puzzleTile{
+	border-radius:6px;
+	cursor:pointer;
+	transition:transform 120ms var(--ease), filter 120ms var(--ease);
+}
+
+.puzzleTile:hover{
+	filter:brightness(1.08);
+	transform:scale(1.02);
+}
+
+.puzzleBlank{
+	background:hsl(var(--ink) / 0.9);
+	cursor:default;
+}
+
+/* ---------- rotating room artwork ---------- */
+
+.levelArtWrap{
+	pointer-events:none;
+}
+
+.levelArtPhoto{
+	position:absolute;
+	background-size:cover;
+	background-position:center;
+}
+
+.levelArtFrame{
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	background-size:100% 100%;
+	background-repeat:no-repeat;
+	mix-blend-mode:multiply;
+}
+
+@media (prefers-reduced-motion: reduce){
+	.button, .navButton, .puzzleTile{
+		transition:none;
+	}
+}

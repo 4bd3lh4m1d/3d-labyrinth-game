@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+
+<HTML lang="en">
+	<HEAD>
+		<TITLE>Puzzle 3D Game</TITLE>
+		<LINK rel="preconnect" href="https://fonts.googleapis.com">
+		<LINK rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<LINK href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+		<LINK rel="stylesheet" href="style.css">
+		<meta charset="utf-8">
+	</HEAD>
+
+	<BODY>
+		<div id="stage">
+		<div id="container">
+			<div id="world">
+
+			</div>
+
+			<div id="menu0" class="menu" style="display:flex">
+				<div class="menuPanel">
+					<div class="langToggle">
+						<div id="langEn" class="langButton active">EN</div>
+						<div id="langLv" class="langButton">LV</div>
+					</div>
+					<h1 class="menuTitle" data-i18n="setupTitle">Before we begin</h1>
+					<label for="playerName" class="fieldLabel" data-i18n="nameLabel">Your name</label>
+					<input type="text" id="playerName" class="textInput" maxlength="20" autocomplete="off">
+					<label for="playerAge" class="fieldLabel" data-i18n="ageLabel">Your age</label>
+					<input type="number" id="playerAge" class="textInput textInputShort" min="3" max="12" autocomplete="off">
+					<p id="setupError" class="errorText"></p>
+					<p id="setupNotice" class="noticeText" data-i18n="setupNotice">Your name is only used to say hi in the game — it isn't saved or sent anywhere.</p>
+					<div id="buttonContinue" class="button buttonPrimary">
+						<p data-i18n="continueBtn">Continue</p>
+					</div>
+				</div>
+			</div>
+
+			<div id="menu1" class="menu">
+				<div class="menuPanel">
+					<h1 class="menuTitle" data-i18n="mainTitle">Picture Quest</h1>
+					<div id="button1" class="button buttonPrimary">
+						<p data-i18n="startGame">Start game</p>
+					</div>
+					<div id="button2" class="button">
+						<p data-i18n="instructionsBtn">Instructions</p>
+					</div>
+				</div>
+			</div>
+
+			<div id="menu2" class="menu">
+				<div class="menuPanel">
+					<h1 class="menuTitle" data-i18n="controlsTitle">Controls</h1>
+					<p class="menuBody" data-i18n="controlsBody">
+						w - Go Forward<br>
+						s - Go Back<br>
+						a - Go Left<br>
+						d - Go Right<br>
+						Space - Jump<br>
+						You can use an English keyboard only!!!
+					</p>
+					<div id="button4" class="navButton">
+						<p data-i18n="rulesBtn">Rules</p>
+					</div>
+					<div id="button3" class="navButton navButtonGhost">
+						<p data-i18n="backToMenu">Back</p>
+					</div>
+				</div>
+			</div>
+
+			<div id="menu3" class="menu">
+				<div class="menuPanel">
+					<h1 class="menuTitle" data-i18n="rulesTitle">How to win</h1>
+					<p class="menuBody" data-i18n="rulesBody">
+						Find the rotating picture in each room and walk up to it to open its puzzle.
+						Solve the puzzle to move to the next room. Solve all the puzzles to win the game!
+					</p>
+					<div id="button5" class="navButton navButtonGhost">
+						<p data-i18n="backToMenu">Back</p>
+					</div>
+				</div>
+			</div>
+
+			<div id="puzzleOverlay" class="menu puzzleMenu">
+				<div class="menuPanel puzzlePanel">
+					<h1 class="menuTitle" id="puzzleTitle" data-i18n="puzzleTitle">Piece it back together</h1>
+					<div class="puzzleArea">
+						<div id="puzzleGrid" class="puzzleGrid"></div>
+					</div>
+				</div>
+			</div>
+
+			<div id="menuWin" class="menu">
+				<div class="menuPanel">
+					<h1 class="menuTitle" data-i18n="winTitle">You solved every puzzle!</h1>
+					<p class="menuBody" data-i18n="winBody">Great job, explorer. Every picture is back in one piece.</p>
+					<div id="buttonWinMenu" class="button buttonPrimary">
+						<p data-i18n="backToMenu">Back</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+	</BODY>
+</HTML>
+<script src="script.js"></script>

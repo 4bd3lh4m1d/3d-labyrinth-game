@@ -1,0 +1,247 @@
+/*
+  style.css
+  ---------
+  This file is the "paint and decoration" of the game.
+  The HTML says what exists; this file decides how it LOOKS:
+  colors, fonts, button shapes, and which screen fills the window.
+
+  Design goal: fun, colorful, and simple for kids.
+*/
+
+/* ---------- 1. GLOBAL RESET ----------
+   Browsers add tiny default spaces. We remove them so everything
+   lines up the way we expect. "*" means "every element". */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* padding counts INSIDE the width, easier to reason about */
+}
+
+/* Make the page fill the whole browser window with no scrollbars. */
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;                 /* the 3D world fills the screen, no scrolling */
+  font-family: "Comic Sans MS", "Trebuchet MS", Verdana, sans-serif; /* friendly, kid-like font */
+  user-select: none;                /* stop text getting highlighted while playing */
+}
+
+/* ---------- 2. SCREENS ----------
+   Every menu and the game are a "screen". We stack them all in the same
+   spot and only show the one with the "active" class. This is exactly like
+   flipping between pages in a phone app. */
+.screen {
+  position: absolute;               /* all screens sit on top of each other */
+  inset: 0;                         /* stretch to fill: top/right/bottom/left = 0 */
+  display: none;                    /* hidden by default */
+  align-items: center;              /* center the panel vertically */
+  justify-content: center;          /* center the panel horizontally */
+}
+
+.screen.active {
+  display: flex;                    /* only the active screen is shown */
+}
+
+/* ---------- 3. MENU BACKGROUND ----------
+   A soft, colorful gradient so the menus feel playful. */
+#main-menu,
+#instructions-menu,
+#rules-menu {
+  background: linear-gradient(135deg, #7ee8fa 0%, #80ff72 50%, #ffcf71 100%);
+}
+
+/* ---------- 4. THE PANEL (the white card holding menu content) ---------- */
+.panel {
+  background: #ffffff;
+  padding: 40px 48px;
+  border-radius: 28px;              /* big rounded corners = friendly */
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  max-width: 90%;
+  width: 460px;
+}
+
+/* ---------- 5. TEXT ---------- */
+.title {
+  color: #ff6b6b;                   /* cheerful red-pink */
+  margin-bottom: 12px;
+  font-size: 2rem;
+}
+
+.subtitle {
+  color: #555;
+  margin-bottom: 28px;
+  font-size: 1.05rem;
+}
+
+/* A simple, readable list used for instructions and rules. */
+.info-list {
+  text-align: left;
+  list-style: none;                 /* we add our own emoji bullets in the HTML */
+  margin: 0 auto 28px;
+  line-height: 1.9;
+  color: #333;
+  font-size: 1.05rem;
+}
+
+/* ---------- 6. BUTTONS ----------
+   Big, rounded, and colorful so they are easy to tap and fun to press. */
+.btn {
+  display: block;
+  width: 100%;
+  margin: 12px 0;
+  padding: 16px 20px;
+  font-size: 1.1rem;
+  font-family: inherit;             /* use the same friendly font */
+  color: #333;
+  background: #f1f3f5;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: transform 0.1s ease, background 0.2s ease; /* small press animation */
+}
+
+/* Grow a little when the mouse hovers, so it feels alive. */
+.btn:hover {
+  background: #e2e6ea;
+  transform: translateY(-2px);
+}
+
+/* Shrink slightly when pressed, like a real button. */
+.btn:active {
+  transform: translateY(1px);
+}
+
+/* The main call-to-action ("Start Game") stands out in green.
+   Dark green text on the light green button keeps it easy to read. */
+.btn-primary {
+  background: #51cf66;
+  color: #123f1f;
+  font-weight: bold;
+}
+.btn-primary:hover {
+  background: #40c057;
+}
+
+/* A tiny button used inside the game HUD. */
+.btn-small {
+  width: auto;
+  margin: 0;
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  background: #ff8787;
+  color: #5c0f0f;                   /* dark red text: readable on the light red */
+  font-weight: bold;
+}
+.btn-small:hover {
+  background: #ff6b6b;
+}
+
+/* ---------- 7. GAME SCREEN ---------- */
+#game-screen {
+  background: #000;                 /* black behind the 3D world while it loads */
+}
+
+/* The canvas is where our raycaster draws the 3D maze. It is rendered at
+   a small retro size (640 px wide) and stretched to fill the window —
+   "pixelated" keeps it crisp and chunky instead of blurry. */
+#game-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  image-rendering: pixelated;
+  cursor: crosshair;                /* hints "click me" before the mouse is captured */
+}
+
+/* A tiny aiming dot fixed at the center of the screen, like in any
+   first-person game. "pointer-events: none" lets clicks pass through it. */
+#crosshair {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;            /* center it exactly on its own middle */
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}
+
+/* The "click to look around" reminder, shown until the mouse is captured. */
+#lock-hint {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 22px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 1.1rem;
+  pointer-events: none;             /* the click should reach the canvas below */
+}
+
+/* ---------- 8. HUD (score + level shown on top of the game) ---------- */
+#hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 14px 20px;
+  color: #fff;
+  font-size: 1.2rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); /* readable over any background */
+  pointer-events: none;             /* clicks pass through to the game... */
+}
+
+/* ...except the Quit button, which we DO want to be clickable. */
+#hud-quit {
+  pointer-events: auto;
+  margin-left: auto;                /* push it to the right edge */
+}
+
+.hud-item {
+  background: rgba(0, 0, 0, 0.35);
+  padding: 6px 14px;
+  border-radius: 12px;
+}
+
+/* ---------- 9. POP-UP MESSAGE ("Level Complete!", "You Win!") ---------- */
+#game-message {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.55);  /* dim the game behind the message */
+}
+
+/* A helper class: add "hidden" to any element to hide it. */
+.hidden {
+  display: none !important;
+}
+
+.message-box {
+  background: #fff;
+  padding: 36px 52px;
+  border-radius: 24px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+#message-text {
+  font-size: 1.8rem;
+  color: #ff6b6b;
+}
+
+/* ---------- 10. SMALL SCREENS (phones/tablets) ----------
+   Make the fonts a bit smaller so panels still fit. */
+@media (max-width: 500px) {
+  .title { font-size: 1.6rem; }
+  .panel { padding: 28px 24px; }
+  #hud { font-size: 1rem; }
+}

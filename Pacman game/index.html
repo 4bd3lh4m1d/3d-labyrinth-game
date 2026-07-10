@@ -1,0 +1,109 @@
+<!--
+  index.html
+  ----------
+  This is the "skeleton" of the game. Think of it like the empty rooms of a house:
+  the HTML says WHAT exists (menus, buttons, the game screen), the CSS (style.css)
+  paints and decorates it, and the JavaScript (script.js) makes it move and react.
+
+  We keep three "menu screens" and one "game screen". Only ONE is visible at a time,
+  just like flipping between screens in a phone app.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maze Explorer 3D</title>
+
+  <!-- Our own styles (colors, buttons, layout) -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!--
+    No libraries needed! The whole 3D view is drawn with pure JavaScript
+    in script.js, using a technique called "raycasting" (explained there).
+    The game works completely offline.
+  -->
+</head>
+
+<body>
+
+  <!-- ================= SCREEN 1: MAIN MENU ================= -->
+  <!-- "screen" = one full page. "active" = the one currently shown. -->
+  <section id="main-menu" class="screen active">
+    <div class="panel">
+      <h1 class="title">🌟 Maze Explorer 3D 🌟</h1>
+      <p class="subtitle">Grab the coins. Find the door. Beat every level!</p>
+
+      <button class="btn btn-primary" data-action="start">▶ Start Game</button>
+      <button class="btn" data-action="show-instructions">📘 Instructions</button>
+    </div>
+  </section>
+
+  <!-- ================= SCREEN 2: INSTRUCTIONS ================= -->
+  <section id="instructions-menu" class="screen">
+    <div class="panel">
+      <h2 class="title">📘 How to Play</h2>
+
+      <!-- Placeholder text: you can rewrite this later. -->
+      <ul class="info-list">
+        <li>🖱️ Move the <b>mouse</b> to look around (click the game first).</li>
+        <li>🕹️ Walk with the <b>Arrow keys</b> or <b>W A S D</b>.</li>
+        <li>⬆️ Press <b>Space</b> to jump over the orange hurdles.</li>
+        <li>🪙 Grab every <b>coin</b> to unlock the exit door.</li>
+        <li>🚪 Walk into the <b>green door</b> to reach the next level.</li>
+        <li>👻 Run from the <b>ghosts</b> — if one touches you, game over!</li>
+      </ul>
+
+      <button class="btn" data-action="show-rules">📜 Rules</button>
+      <button class="btn" data-action="back-to-main">⬅ Back</button>
+    </div>
+  </section>
+
+  <!-- ================= SCREEN 3: RULES ================= -->
+  <section id="rules-menu" class="screen">
+    <div class="panel">
+      <h2 class="title">📜 Rules</h2>
+
+      <!-- Placeholder rules: change these words whenever you like. -->
+      <ul class="info-list">
+        <li>Collect <b>all</b> coins before the door opens.</li>
+        <li>If a <b>ghost</b> touches you, the game is over.</li>
+        <li>Each level is bigger, with more (and faster) ghosts.</li>
+        <li>Use the little map in the corner if you get lost.</li>
+        <li>Finish all 5 levels to win the game. Have fun! 🎉</li>
+      </ul>
+
+      <button class="btn" data-action="back-to-main">⬅ Back to Menu</button>
+    </div>
+  </section>
+
+  <!-- ================= SCREEN 4: THE GAME ================= -->
+  <section id="game-screen" class="screen">
+    <!-- Our raycasting engine draws the 3D world onto this canvas. -->
+    <canvas id="game-canvas"></canvas>
+
+    <!-- A tiny dot in the middle of the screen, so you know where you aim. -->
+    <div id="crosshair"></div>
+
+    <!-- Shown until the player clicks to capture the mouse for looking around. -->
+    <div id="lock-hint" class="hidden">🖱️ Click the screen to look around</div>
+
+    <!-- HUD = "Heads Up Display": little info shown on top of the game. -->
+    <div id="hud">
+      <div class="hud-item">🏆 Level: <span id="hud-level">1</span></div>
+      <div class="hud-item">🪙 Coins: <span id="hud-coins">0</span> / <span id="hud-total">0</span></div>
+      <button id="hud-quit" class="btn btn-small">✖ Quit</button>
+    </div>
+
+    <!-- A big message that pops up ("Level Complete!", "You Win!", etc.) -->
+    <div id="game-message" class="hidden">
+      <div class="message-box">
+        <p id="message-text">Level Complete!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- The brain of the game. Loaded last so the page above already exists. -->
+  <script src="script.js"></script>
+</body>
+</html>
